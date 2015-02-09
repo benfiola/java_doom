@@ -1,10 +1,14 @@
 package com.ben.javaengine.event.publishers;
 
+import org.apache.log4j.Logger;
+
 import com.ben.javaengine.event.events.AbstractEvent;
 import com.ben.javaengine.event.events.WindowCloseEvent;
 import com.ben.javaengine.event.listeners.WindowCloseEventListener;
 
 public class WindowCloseEventPublisher extends AbstractEventPublisher {	
+	private static Logger LOG = Logger.getLogger(WindowCloseEventPublisher.class);
+
 	@Override
 	public void publish(AbstractEvent e) {
 		for(Object sub : subs) {

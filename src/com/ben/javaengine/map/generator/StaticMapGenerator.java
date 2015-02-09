@@ -3,22 +3,27 @@ package com.ben.javaengine.map.generator;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ben.javaengine.map.Map;
+import org.apache.log4j.Logger;
+
+import com.ben.javaengine.logic.map.Map;
+import com.ben.javaengine.map.entities.Line;
+import com.ben.javaengine.map.entities.Room;
 import com.ben.javaengine.map.entities.Vertex;
-import com.ben.javaengine.map.entities.Wall;
 
 public class StaticMapGenerator {
-	private static final Integer WALL_HEIGHT = 100;
+	private static final Logger LOG = Logger.getLogger(StaticMapGenerator.class);
 	
 	public static Map generateMap() {
-		Vertex bl = new Vertex(20, 20, 0);
-		Vertex tl = new Vertex(20, 20, WALL_HEIGHT);
-		Vertex tr = new Vertex(40, 20, WALL_HEIGHT);
-		Vertex br = new Vertex(40, 20, 0);
-		Wall newWall = new Wall(tl, tr, bl, br);
-		List<Wall> wallList = new ArrayList<Wall>();
-		wallList.add(newWall);
-		Map toReturn = new Map(wallList);
+		List<Line> walls = new ArrayList<Line>();
+		walls.add(new Line(new Vertex(20, 20), new Vertex(40, 20)));
+		walls.add(new Line(new Vertex(0,0), new Vertex(100, 0)));
+		walls.add(new Line(new Vertex(100, 0), new Vertex(100, 100)));
+		walls.add(new Line(new Vertex(100, 100), new Vertex(0, 100)));
+		walls.add(new Line(new Vertex(0, 100), new Vertex(0, 0)));
+		Room newRoom = new Room(100, 0, walls);
+		List<Room> roomList = new ArrayList<Room>();
+		roomList.add(newRoom);
+		Map toReturn = new Map(roomList);
 		return toReturn;
 	}
 }

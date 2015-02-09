@@ -1,18 +1,15 @@
 package com.ben.javaengine.map.entities;
 
+import org.apache.log4j.Logger;
+
 /*
  * This class represents a point in 3D space
  */
 public class Vertex {
+	private static final Logger LOG = Logger.getLogger(Vertex.class);
+
 	private int x;
 	private int y;
-	private int z;
-	
-	public Vertex(int x, int y, int z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-	}
 	
 	public Vertex(int x, int y) {
 		this.x = x;
@@ -25,9 +22,5 @@ public class Vertex {
 	
 	public int getY() {
 		return this.y;
-	}
-	
-	public int getZ() {
-		return this.z;
 	}
 }
