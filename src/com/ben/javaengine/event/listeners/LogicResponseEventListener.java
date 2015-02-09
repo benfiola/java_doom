@@ -5,5 +5,5 @@ import com.ben.javaengine.event.events.LogicResponseEvent;
 
 public interface LogicResponseEventListener extends EventListener {
 	
-	public void onLogicResponse(LogicResponseEvent e);
+	public void onLogicResponseEvent(LogicResponseEvent e);
 }

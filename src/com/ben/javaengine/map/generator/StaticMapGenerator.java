@@ -23,7 +23,7 @@ public class StaticMapGenerator {
 		Room newRoom = new Room(100, 0, walls);
 		List<Room> roomList = new ArrayList<Room>();
 		roomList.add(newRoom);
-		Map toReturn = new Map(roomList);
+		Map toReturn = new Map(roomList, 150, 150);
 		return toReturn;
 	}
 }

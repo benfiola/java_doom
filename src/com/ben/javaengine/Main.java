@@ -14,7 +14,7 @@ public class Main {
 	private static Logger LOG = Logger.getLogger(Main.class);
 	public static void main(String[] args) {
 		BasicConfigurator.configure();
-		LOG.info("Initializing main application");
+		LOG.info("Initializing");
 		Controller c = new Controller();
 		while(true) {
 		}

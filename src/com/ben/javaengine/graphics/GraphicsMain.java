@@ -2,7 +2,6 @@ package com.ben.javaengine.graphics;
 
 import org.apache.log4j.Logger;
 
-import com.ben.javaengine.graphics.canvas.EngineCanvas;
 import com.ben.javaengine.graphics.frame.EngineFrame;
 import com.ben.javaengine.logic.LogicMain;
 
@@ -11,14 +10,11 @@ public class GraphicsMain {
 	private EngineFrame rootFrame;
 	
 	public GraphicsMain() {
+		LOG.info("Initializing");
 		this.rootFrame = new EngineFrame("Test");
 	}
 	
-	public boolean isDisposed() {
-		return rootFrame.isDisplayable();
-	}
-	
 	public void sendDataToCanvas(LogicMain data) {
-		((EngineCanvas) this.rootFrame.getComponent(0)).receiveData(data);
+		this.rootFrame.getCanvas().receiveData(data);
 	}
 }

@@ -1,8 +1,8 @@
 package com.ben.javaengine.event.managers;
 
 import java.lang.reflect.Constructor;
-import java.util.HashMap;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.log4j.Logger;
 import org.reflections.Reflections;
@@ -15,10 +15,10 @@ public class EventManager {
 
 	private static EventManager em;
 
-	public HashMap<Class<? extends AbstractEvent>, AbstractEventPublisher> pubs;
+	public ConcurrentHashMap<Class<? extends AbstractEvent>, AbstractEventPublisher> pubs;
 
 	protected EventManager() {
-		pubs = new HashMap<Class<? extends AbstractEvent>, AbstractEventPublisher>();
+		pubs = new ConcurrentHashMap<Class<? extends AbstractEvent>, AbstractEventPublisher>();
 		Reflections reflections = new Reflections(AbstractEventPublisher.class
 				.getPackage().getName());
 		Set<Class<? extends AbstractEventPublisher>> pubClasses = reflections
@@ -50,7 +50,7 @@ public class EventManager {
 
 	public static void publish(final AbstractEvent e) {
 		EventManager instance = EventManager.getInstance();
-		AbstractEventPublisher pub = instance.getPublisher(e.getClass());
+		final AbstractEventPublisher pub = instance.getPublisher(e.getClass());
 		if (pub != null) {
 			pub.publish(e);
 		}

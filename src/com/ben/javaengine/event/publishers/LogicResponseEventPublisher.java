@@ -15,7 +15,7 @@ public class LogicResponseEventPublisher extends AbstractEventPublisher {
 			if(sub instanceof LogicResponseEventListener && e instanceof LogicResponseEvent) {
 				LogicResponseEventListener castedSub = (LogicResponseEventListener) sub;
 				LogicResponseEvent castedEvent = (LogicResponseEvent) e;
-				castedSub.onLogicResponse(castedEvent);
+				castedSub.onLogicResponseEvent(castedEvent);
 			}
 		}
 	}
