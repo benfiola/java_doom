@@ -8,19 +8,19 @@ import org.apache.log4j.Logger;
 public class Vertex {
 	private static final Logger LOG = Logger.getLogger(Vertex.class);
 
-	private int x;
-	private int y;
+	private Double x;
+	private Double y;
 	
-	public Vertex(int x, int y) {
+	public Vertex(Double x, Double y) {
 		this.x = x;
 		this.y = y;
 	}
 	
-	public int getX() {
+	public Double getX() {
 		return this.x;
 	}
 	
-	public int getY() {
+	public Double getY() {
 		return this.y;
 	}
 }

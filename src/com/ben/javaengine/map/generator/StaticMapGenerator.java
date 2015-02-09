@@ -15,15 +15,15 @@ public class StaticMapGenerator {
 	
 	public static Map generateMap() {
 		List<Line> walls = new ArrayList<Line>();
-		walls.add(new Line(new Vertex(20, 20), new Vertex(40, 20)));
-		walls.add(new Line(new Vertex(0,0), new Vertex(100, 0)));
-		walls.add(new Line(new Vertex(100, 0), new Vertex(100, 100)));
-		walls.add(new Line(new Vertex(100, 100), new Vertex(0, 100)));
-		walls.add(new Line(new Vertex(0, 100), new Vertex(0, 0)));
+		walls.add(new Line(new Vertex(20.0, 20.0), new Vertex(40.0, 20.0)));
+		walls.add(new Line(new Vertex(0.0,0.0), new Vertex(100.0, 0.0)));
+		walls.add(new Line(new Vertex(100.0, 0.0), new Vertex(100.0, 100.0)));
+		walls.add(new Line(new Vertex(100.0, 100.0), new Vertex(0.0, 100.0)));
+		walls.add(new Line(new Vertex(0.0, 100.0), new Vertex(0.0, 0.0)));
 		Room newRoom = new Room(100, 0, walls);
 		List<Room> roomList = new ArrayList<Room>();
 		roomList.add(newRoom);
-		Map toReturn = new Map(roomList, 150, 150);
+		Map toReturn = new Map(roomList, 150.0, 150.0);
 		return toReturn;
 	}
 }

@@ -1,7 +1,5 @@
 package com.ben.javaengine.logic;
 
-import java.awt.event.KeyEvent;
-
 import org.apache.log4j.Logger;
 
 import com.ben.javaengine.logic.map.Map;
@@ -17,10 +15,24 @@ public class LogicMain {
 		LOG.info("Initializing");
 		this.map = StaticMapGenerator.generateMap();
 		this.player = new Player(20.0, 20.0, 0.0);
+		new Thread(new Runnable() {
+			public void run() {
+				while(true) {
+					player.update();
+					try { Thread.sleep(30); } catch(Exception e) {}
+				}
+			}
+		}, "LogicMainThread").start();
 	}
 	
 	public void handleKeyPress(Integer keyCode) {
-		player.movePlayer(keyCode);
+		Integer diff = keyCode - 37;
+		this.player.addToMovementBuffer(diff);
+	}
+	
+	public void handleKeyRelease(Integer keyCode) {
+		Integer diff = keyCode - 37;
+		this.player.removeFromMovementBuffer(diff);
 	}
 	
 	public Player getPlayer() {

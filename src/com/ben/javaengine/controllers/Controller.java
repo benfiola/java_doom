@@ -4,10 +4,12 @@ import org.apache.log4j.Logger;
 
 import com.ben.javaengine.event.events.AbstractEvent;
 import com.ben.javaengine.event.events.KeyPressEvent;
+import com.ben.javaengine.event.events.KeyReleaseEvent;
 import com.ben.javaengine.event.events.LogicRequestEvent;
 import com.ben.javaengine.event.events.LogicResponseEvent;
 import com.ben.javaengine.event.events.WindowCloseEvent;
 import com.ben.javaengine.event.listeners.KeyPressEventListener;
+import com.ben.javaengine.event.listeners.KeyReleaseEventListener;
 import com.ben.javaengine.event.listeners.LogicRequestEventListener;
 import com.ben.javaengine.event.listeners.LogicResponseEventListener;
 import com.ben.javaengine.event.listeners.WindowCloseEventListener;
@@ -20,7 +22,7 @@ import com.ben.javaengine.logic.LogicMain;
  * all the components of our application and facilitate communication between
  * the components.
  */
-public class Controller implements WindowCloseEventListener, LogicRequestEventListener, LogicResponseEventListener, KeyPressEventListener {
+public class Controller implements WindowCloseEventListener, LogicRequestEventListener, LogicResponseEventListener, KeyPressEventListener, KeyReleaseEventListener {
 	private static Logger LOG = Logger.getLogger(Controller.class);
 
 	private GraphicsMain g;
@@ -36,6 +38,7 @@ public class Controller implements WindowCloseEventListener, LogicRequestEventLi
 		EventManager.subscribe(LogicRequestEvent.class, this);
 		EventManager.subscribe(LogicResponseEvent.class, this);
 		EventManager.subscribe(KeyPressEvent.class, this);
+		EventManager.subscribe(KeyReleaseEvent.class, this);
 		
 		l = new LogicMain();
 		g = new GraphicsMain();
@@ -63,6 +66,12 @@ public class Controller implements WindowCloseEventListener, LogicRequestEventLi
 	public void onKeyPressEvent(KeyPressEvent e) {
 		if(l != null) {
 			l.handleKeyPress(e.getKeyPressed());
+		}
+	}
+	
+	public void onKeyReleaseEvent(KeyReleaseEvent e) {
+		if(l != null) {
+			l.handleKeyRelease(e.getKeyReleased());
 		}
 	}
 }

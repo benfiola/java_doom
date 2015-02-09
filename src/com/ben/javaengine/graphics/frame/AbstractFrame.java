@@ -42,6 +42,5 @@ public abstract class AbstractFrame extends JFrame implements WindowListener, Ke
 
 	abstract public void keyPressed(KeyEvent e);
 
-	public void keyReleased(KeyEvent e) {
-	}
+	abstract public void keyReleased(KeyEvent e);
 }

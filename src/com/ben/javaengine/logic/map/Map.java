@@ -10,10 +10,10 @@ public class Map {
 	private static final Logger LOG = Logger.getLogger(Map.class);
 
 	private List<Room> rooms;
-	private Integer width;
-	private Integer height;
+	private Double width;
+	private Double height;
 	
-	public Map(List<Room> rooms, Integer width, Integer height) {
+	public Map(List<Room> rooms, Double width, Double height) {
 		this.rooms = rooms;
 		this.width = width;
 		this.height = height;
@@ -23,11 +23,11 @@ public class Map {
 		return this.rooms;
 	}
 	
-	public Integer getWidth() {
+	public Double getWidth() {
 		return this.width;
 	}
 	
-	public Integer getHeight() {
+	public Double getHeight() {
 		return this.height;
 	}
 }

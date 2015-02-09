@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import com.ben.javaengine.event.events.AbstractEvent;
 import com.ben.javaengine.event.events.KeyPressEvent;
+import com.ben.javaengine.event.events.KeyReleaseEvent;
 import com.ben.javaengine.event.events.WindowCloseEvent;
 import com.ben.javaengine.event.managers.EventManager;
 import com.ben.javaengine.graphics.canvas.EngineCanvas;
@@ -51,6 +52,14 @@ public class EngineFrame extends AbstractFrame implements KeyListener, WindowLis
 		new Thread(new Runnable() {
 			public void run() {
 				EventManager.publish(new KeyPressEvent(this.getClass(), "User has pressed a key.", AbstractEvent.STATUS_OK, e.getKeyCode()));
+			}
+		}, "TempKeyPressedThread").start();
+	}
+	
+	public void keyReleased(final KeyEvent e) {
+		new Thread(new Runnable() {
+			public void run() {
+				EventManager.publish(new KeyReleaseEvent(this.getClass(), "User has released a key.", AbstractEvent.STATUS_OK, e.getKeyCode()));
 			}
 		}, "TempKeyPressedThread").start();
 	}
