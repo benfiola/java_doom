@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import com.ben.javaengine.event.events.AbstractEvent;
 import com.ben.javaengine.event.events.LogicRequestEvent;
 import com.ben.javaengine.event.managers.EventManager;
+import com.ben.javaengine.graphics.canvas.AbstractGameCanvas;
 import com.ben.javaengine.graphics.frame.EngineFrame;
 import com.ben.javaengine.logic.LogicMain;
 
@@ -26,8 +27,9 @@ public class GraphicsMain {
 	}
 	
 	public void sendDataToCanvas(LogicMain data) {
-		this.rootFrame.getEngineCanvas().receiveData(data);
-		this.rootFrame.getTopDownCanvas().receiveData(data);
+		for(AbstractGameCanvas canvas : rootFrame.getCanvases()) {
+			canvas.receiveData(data);
+		}
 		this.rootFrame.getContentPane().repaint();
 	}
 }

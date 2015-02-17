@@ -4,22 +4,22 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.ben.javaengine.map.entities.Room;
+import com.ben.javaengine.map.entities.Sector;
 
 public class Map {
 	private static final Logger LOG = Logger.getLogger(Map.class);
 
-	private List<Room> rooms;
+	private List<Sector> rooms;
 	private Double width;
 	private Double height;
 	
-	public Map(List<Room> rooms, Double width, Double height) {
+	public Map(List<Sector> rooms, Double width, Double height) {
 		this.rooms = rooms;
 		this.width = width;
 		this.height = height;
 	}
 	
-	public List<Room> getRooms() {
+	public List<Sector> getRooms() {
 		return this.rooms;
 	}
 	

@@ -5,13 +5,13 @@ import org.apache.log4j.Logger;
 /*
  * This class represents a 'wall' or a collection of four vertices in a 3D space.
  */
-public class Line {
-	private static final Logger LOG = Logger.getLogger(Line.class);
+public class Wall {
+	private static final Logger LOG = Logger.getLogger(Wall.class);
 
 	private Vertex p1;
 	private Vertex p2;
 	
-	public Line(Vertex p1, Vertex p2) {
+	public Wall(Vertex p1, Vertex p2) {
 		this.p1 = p1;
 		this.p2 = p2;
 	}

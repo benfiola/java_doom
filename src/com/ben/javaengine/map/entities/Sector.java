@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-public class Room {
-	private static Logger LOG = Logger.getLogger(Room.class);
+public class Sector {
+	private static Logger LOG = Logger.getLogger(Sector.class);
 	
 	private Integer height;
 	private Integer floor;
-	private List<Line> walls;
+	private List<Wall> walls;
 	
-	public Room(Integer height, Integer floor, List<Line> walls) {
+	public Sector(Integer height, Integer floor, List<Wall> walls) {
 		this.height = height;
 		this.floor = floor;
 		this.walls = walls;
@@ -25,7 +25,7 @@ public class Room {
 		return this.floor;
 	}
 	
-	public List<Line> getWalls() {
+	public List<Wall> getWalls() {
 		return this.walls;
 	}
 }

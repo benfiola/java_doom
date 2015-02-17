@@ -8,9 +8,13 @@ public class Player {
 	private static Logger LOG = Logger.getLogger(Player.class);
 
 	public static Double HEIGHT = 20.0;
+	public static Double SIGHT_LINE = 3.0;
+	
 	private static Double ROTATE_SPEED = 10.0;
-	private static Double SIGHT_LINE = 3.0;
+
 	private static Double MOVE_SPEED = 1.0;
+	private static Double FIELD_OF_VIEW = 75.0;
+	
 	private Integer LEFT = 1;
 	private Integer UP = 2;
 	private Integer RIGHT = 4;
@@ -58,13 +62,7 @@ public class Player {
 		this.y = y + getYMod(MOVE_SPEED);
 		this.x = x + getXMod(MOVE_SPEED);
 	}
-	
-	public Vertex getSightPoint() {
-		Double newY = y + getYMod(SIGHT_LINE);
-		Double newX = x + getXMod(SIGHT_LINE);
-		return new Vertex(newX, newY);
-	}
-	
+
 	private Double getXMod(Double scalar) {
 		Double xMod = Math.cos(Math.toRadians(direction)) * scalar;
 		return xMod;

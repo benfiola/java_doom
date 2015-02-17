@@ -16,20 +16,9 @@ public class EngineCanvas extends AbstractGameCanvas {
 		super();
 	}
 	
-	private Double getCameraTransformX() {
-		return 0.0;
-	}
-	
-	private Double getCameraTransformY() {
-		return 0.0;
-	}
-	
-	private Double getCameraTransformZ() {
-		return 0.0;
-	}
-	
 	@Override
 	protected void paintComponent(Graphics g) {
-		
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, getWidth(), getHeight());
 	}
 }
