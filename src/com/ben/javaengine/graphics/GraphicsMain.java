@@ -15,6 +15,7 @@ public class GraphicsMain {
 	public GraphicsMain() {
 		LOG.info("Initializing");
 		this.rootFrame = new EngineFrame("Test");
+		this.rootFrame.finishInitializing();
 		new Thread(new Runnable() {
 			public void run() {
 				while(true) {
@@ -25,6 +26,8 @@ public class GraphicsMain {
 	}
 	
 	public void sendDataToCanvas(LogicMain data) {
-		this.rootFrame.getCanvas().receiveData(data);
+		this.rootFrame.getEngineCanvas().receiveData(data);
+		this.rootFrame.getTopDownCanvas().receiveData(data);
+		this.rootFrame.getContentPane().repaint();
 	}
 }
