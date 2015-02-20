@@ -1,5 +1,7 @@
 package com.ben.javaengine.logic;
 
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 
 import com.ben.javaengine.logic.map.Map;
@@ -16,10 +18,13 @@ public class LogicMain {
 		this.map = StaticMapGenerator.generateMap();
 		this.player = new Player(20.0, 20.0, 0.0);
 		new Thread(new Runnable() {
+			private long prevUpdate = new Date().getTime();
 			public void run() {
 				while(true) {
-					player.update();
-					try { Thread.sleep(30); } catch(Exception e) {}
+					long currTime = new Date().getTime();
+					long timeSinceLastUpdate = currTime - prevUpdate;
+					player.update(timeSinceLastUpdate);
+					prevUpdate = currTime;
 				}
 			}
 		}, "LogicMainThread").start();

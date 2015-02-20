@@ -2,17 +2,15 @@ package com.ben.javaengine.logic.player;
 
 import org.apache.log4j.Logger;
 
-import com.ben.javaengine.map.entities.Vertex;
-
 public class Player {
 	private static Logger LOG = Logger.getLogger(Player.class);
 
 	public static Double HEIGHT = 20.0;
 	public static Double SIGHT_LINE = 3.0;
 	
-	private static Double ROTATE_SPEED = 10.0;
+	private static Double ROTATE_SPEED = .6;
 
-	private static Double MOVE_SPEED = 1.0;
+	private static Double MOVE_SPEED = .06;
 	private static Double FIELD_OF_VIEW = 75.0;
 	
 	private Integer LEFT = 1;
@@ -43,24 +41,24 @@ public class Player {
 		return direction;
 	}
 	
-	private void movePlayer(Integer keyBuffer) {
+	private void movePlayer(Integer keyBuffer, double timeSinceLastUpdate) {
 		if((keyBuffer & LEFT) > 0) {
-			rotateLeft();
+			rotateLeft(timeSinceLastUpdate);
 		} 
 		if((keyBuffer & UP) > 0) {
-			moveForward();
+			moveForward(timeSinceLastUpdate);
 		}
 		if((keyBuffer & RIGHT) > 0) {
-			rotateRight();
+			rotateRight(timeSinceLastUpdate);
 		} 
 		if((keyBuffer & DOWN) > 0) {
-			moveBackward();
+			moveBackward(timeSinceLastUpdate);
 		}
 	}
 	
-	private void moveForward() {
-		this.y = y + getYMod(MOVE_SPEED);
-		this.x = x + getXMod(MOVE_SPEED);
+	private void moveForward(double timeSinceLastUpdate) {
+		this.y = y + getYMod(MOVE_SPEED * timeSinceLastUpdate);
+		this.x = x + getXMod(MOVE_SPEED * timeSinceLastUpdate);
 	}
 
 	private Double getXMod(Double scalar) {
@@ -73,27 +71,27 @@ public class Player {
 		return yMod;
 	}
 	
-	private void moveBackward() {
-		this.y = y - getYMod(MOVE_SPEED);
-		this.x = x - getXMod(MOVE_SPEED);
+	private void moveBackward(double timeSinceLastUpdate) {
+		this.y = y - getYMod(MOVE_SPEED * timeSinceLastUpdate);
+		this.x = x - getXMod(MOVE_SPEED * timeSinceLastUpdate);
 	}
 	
-	private void rotateRight() {
-		this.direction = direction + ROTATE_SPEED;
+	private void rotateRight(double timeSinceLastUpdate) {
+		this.direction = direction + (ROTATE_SPEED * timeSinceLastUpdate);
 		if(this.direction > 360.0) {
 			this.direction = this.direction - 360.0;
 		}
 	}
 	
-	private void rotateLeft() {
-		this.direction = this.direction - ROTATE_SPEED;
+	private void rotateLeft(double timeSinceLastUpdate) {
+		this.direction = this.direction - (ROTATE_SPEED * timeSinceLastUpdate);
 		if(this.direction < 0.0) {
 			this.direction = this.direction + 360.0;
 		}
 	}
 	
-	public void update() {
-		movePlayer(movementBuffer);
+	public void update(long timeSinceLastUpdate) {
+		movePlayer(movementBuffer, ((double) timeSinceLastUpdate) / 2.0);
 	}
 	
 	public void addToMovementBuffer(Integer key) {
