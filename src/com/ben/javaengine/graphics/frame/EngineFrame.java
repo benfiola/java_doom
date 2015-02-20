@@ -16,9 +16,9 @@ import com.ben.javaengine.event.events.KeyReleaseEvent;
 import com.ben.javaengine.event.events.WindowCloseEvent;
 import com.ben.javaengine.event.managers.EventManager;
 import com.ben.javaengine.graphics.canvas.AbstractGameCanvas;
-import com.ben.javaengine.graphics.canvas.EngineCanvas;
-import com.ben.javaengine.graphics.canvas.TopDownRelativeCanvas;
-import com.ben.javaengine.graphics.canvas.TopDownAbsoluteCanvas;
+import com.ben.javaengine.graphics.canvas.ThreeDimensionalCanvas;
+import com.ben.javaengine.graphics.canvas.AbsoluteTopDownCanvas;
+import com.ben.javaengine.graphics.canvas.RelativeTopDownCanvas;
 
 public class EngineFrame extends AbstractFrame implements KeyListener, WindowListener {
 	private static final Logger LOG = Logger.getLogger(EngineFrame.class);
@@ -35,18 +35,18 @@ public class EngineFrame extends AbstractFrame implements KeyListener, WindowLis
 	}
 	
 	public void finishInitializing() {
-		//AbstractGameCanvas engineCanvas = new EngineCanvas();
-		AbstractGameCanvas topDownAbsoluteCanvas = new TopDownRelativeCanvas();
-		AbstractGameCanvas topDownRelativeCanvas = new TopDownAbsoluteCanvas();
+		AbstractGameCanvas engineCanvas = new ThreeDimensionalCanvas();
+		AbstractGameCanvas topDownAbsoluteCanvas = new AbsoluteTopDownCanvas();
+		AbstractGameCanvas topDownRelativeCanvas = new RelativeTopDownCanvas();
 		canvases.add(topDownAbsoluteCanvas);
 		canvases.add(topDownRelativeCanvas);
-		//canvases.add(engineCanvas);
+		canvases.add(engineCanvas);
 		
 		GridLayout layout = new GridLayout(canvases.size(), 1);
 		this.setLayout(layout);
 		getContentPane().add(topDownAbsoluteCanvas);
 		getContentPane().add(topDownRelativeCanvas);
-		//getContentPane().add(engineCanvas);
+		getContentPane().add(engineCanvas);
 
 		this.addWindowListener(this);
 		this.addKeyListener(this);

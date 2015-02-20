@@ -10,10 +10,18 @@ public class Vertex {
 
 	private Double x;
 	private Double y;
+	private Double z;
+	
+	public Vertex(Double x, Double y, Double z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
 	
 	public Vertex(Double x, Double y) {
 		this.x = x;
 		this.y = y;
+		this.z = 0.0;
 	}
 	
 	public Double getX() {
@@ -22,5 +30,9 @@ public class Vertex {
 	
 	public Double getY() {
 		return this.y;
+	}
+	
+	public Double getZ() {
+		return this.z;
 	}
 }

@@ -19,7 +19,7 @@ public class Map {
 		this.height = height;
 	}
 	
-	public List<Sector> getRooms() {
+	public List<Sector> getSectors() {
 		return this.rooms;
 	}
 	

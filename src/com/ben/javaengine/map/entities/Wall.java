@@ -1,5 +1,8 @@
 package com.ben.javaengine.map.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 /*
@@ -8,19 +11,33 @@ import org.apache.log4j.Logger;
 public class Wall {
 	private static final Logger LOG = Logger.getLogger(Wall.class);
 
-	private Vertex p1;
-	private Vertex p2;
+	private Vertex topLeft;
+	private Vertex topRight;
+	private Vertex bottomLeft;
+	private Vertex bottomRight;
 	
-	public Wall(Vertex p1, Vertex p2) {
-		this.p1 = p1;
-		this.p2 = p2;
+	public Wall(Vertex p1, Vertex p2, Double height, Double floor) {
+		topLeft = new Vertex(p1.getX(), p1.getY(), height);
+		bottomLeft = new Vertex(p1.getX(), p1.getY(), floor);
+		topRight = new Vertex(p2.getX(), p2.getY(), height);
+		bottomRight = new Vertex(p2.getX(), p2.getY(), floor);
 	}
 	
-	public Vertex getPoint1() {
-		return this.p1;
+	public Vertex getTopLeft() {
+		return topLeft;
 	}
 	
-	public Vertex getPoint2() {
-		return this.p2;
+	public Vertex getTopRight() {
+		return topRight;
 	}
+	
+	public Vertex getBottomLeft() {
+		return bottomLeft;
+	}
+	
+	public Vertex getBottomRight() {
+		return bottomRight;
+	}
+	
+	
 }
