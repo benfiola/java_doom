@@ -16,7 +16,7 @@ public class LogicMain {
 	public LogicMain() {
 		LOG.info("Initializing");
 		this.map = StaticMapGenerator.generateMap();
-		this.player = new Player(20.0, 20.0, 0.0);
+		this.player = new Player(20.0, 20.0, 20.0, 0.0);
 		new Thread(new Runnable() {
 			private long prevUpdate = new Date().getTime();
 			public void run() {

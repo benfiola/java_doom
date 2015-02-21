@@ -82,11 +82,23 @@ public class RelativeTopDownConverter extends AbstractLogicDataConverter {
 	}
 	
 	private Point transformVertex(Vertex toTransform, Player p, Double xFactor, Double yFactor) {
-		double normalizedPtX = toTransform.getX() - p.getX();
-		double normalizedPtY = toTransform.getY() - p.getY();
-		double angleTranslation = -p.getDirection();
 		int offsetX = panel.getWidth() / 2;
 		int offsetY = panel.getHeight() / 2;
+		
+		Vertex transRotVertex = translateAndRotate(toTransform, p);
+		
+		int ptX = Rounder.round(offsetX
+				+ (transRotVertex.getX() * xFactor));
+		int ptY = Rounder.round(offsetY
+				+ (transRotVertex.getY() * yFactor));
+		return new Point(ptX, ptY);	
+	}
+	
+	protected Vertex translateAndRotate(Vertex toTransform, Player p) {
+		double normalizedPtX = toTransform.getX() - p.getX();
+		double normalizedPtY = toTransform.getY() - p.getY();
+		double normalizedPtZ = toTransform.getZ() - p.getZ();
+		double angleTranslation = -p.getDirection();
 		
 		double rotatedPtX = (normalizedPtX)
 				* Math.cos(Math.toRadians(angleTranslation)) - (normalizedPtY)
@@ -94,11 +106,7 @@ public class RelativeTopDownConverter extends AbstractLogicDataConverter {
 		double rotatedPtY = (normalizedPtX)
 				* Math.sin(Math.toRadians(angleTranslation)) + (normalizedPtY)
 				* Math.cos(Math.toRadians(angleTranslation));
-		int ptX = Rounder.round(offsetX
-				+ (rotatedPtX * xFactor));
-		int ptY = Rounder.round(offsetY
-				+ (rotatedPtY * yFactor));
-		return new Point(ptX, ptY);	
+		return new Vertex(rotatedPtX, rotatedPtY, normalizedPtZ);
 	}
 
 }

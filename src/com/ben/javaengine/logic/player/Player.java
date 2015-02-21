@@ -21,11 +21,13 @@ public class Player {
 	
 	private Double x = 20.0;
 	private Double y = 20.0;
+	private Double z = 20.0;
 	private Double direction = 0.0;
 	
-	public Player(Double x, Double y, Double direction) {
+	public Player(Double x, Double y, Double z, Double direction) {
 		this.x = x;
 		this.y = y;
+		this.z = z;
 		this.direction = direction;
 	}
 	
@@ -35,6 +37,11 @@ public class Player {
 	
 	public Double getY() {
 		return y;
+	}
+	
+
+	public Double getZ() {
+		return z;
 	}
 	
 	public Double getDirection() {

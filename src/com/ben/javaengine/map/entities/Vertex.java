@@ -35,4 +35,9 @@ public class Vertex {
 	public Double getZ() {
 		return this.z;
 	}
+	
+	@Override
+	public String toString() {
+		return "[" + this.x + ", " + this.y + ", " + this.z + "]";
+	}
 }
