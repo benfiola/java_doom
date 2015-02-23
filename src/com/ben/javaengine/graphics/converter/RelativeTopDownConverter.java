@@ -42,11 +42,21 @@ public class RelativeTopDownConverter extends AbstractLogicDataConverter {
 		// draw player - player will be at center of viewport - easy enough.
 		Integer pX = Rounder.round((windowWidth / 2));
 		Integer pY = Rounder.round((windowHeight / 2));
-		Integer slX = Rounder.round((windowWidth / 2) + (Player.SIGHT_LINE
-				* xFactor));
-		Integer slY = Rounder.round((windowHeight / 2));
-		toReturn.add(new PlayerGraphicData(pX, pY, slX, slY, Color.BLUE));
-
+		PlayerGraphicData pGfx = new PlayerGraphicData(pX, pY, Color.BLUE);
+		toReturn.add(pGfx);
+		
+		double transSlX = (windowWidth/2) + ((Player.SIGHT_LINE * Math.cos(Math.toRadians(Player.FIELD_OF_VIEW/2))) * xFactor);
+		double transSlY = (windowHeight/2) + ((Player.SIGHT_LINE * Math.sin(Math.toRadians(Player.FIELD_OF_VIEW/2))) * yFactor);
+		int slX = Rounder.round(transSlX);
+		int slY = Rounder.round(transSlY);
+		pGfx.addSightLine(slX, slY);
+		
+		transSlX = (windowWidth/2) + ((Player.SIGHT_LINE * Math.cos(Math.toRadians(-Player.FIELD_OF_VIEW/2))) * xFactor);
+		transSlY = (windowHeight/2) + ((Player.SIGHT_LINE * Math.sin(Math.toRadians(-Player.FIELD_OF_VIEW/2))) * yFactor);
+		slX = Rounder.round(transSlX);
+		slY = Rounder.round(transSlY);
+		pGfx.addSightLine(slX, slY);
+		
 		for (Sector r : m.getSectors()) {
 			List<LineGraphicData> lines = new ArrayList<LineGraphicData>();
 
@@ -97,7 +107,7 @@ public class RelativeTopDownConverter extends AbstractLogicDataConverter {
 	protected Vertex translateAndRotate(Vertex toTransform, Player p) {
 		double normalizedPtX = toTransform.getX() - p.getX();
 		double normalizedPtY = toTransform.getY() - p.getY();
-		double normalizedPtZ = toTransform.getZ() - p.getZ();
+		double normalizedPtZ = p.getZ() - toTransform.getZ();
 		double angleTranslation = -p.getDirection();
 		
 		double rotatedPtX = (normalizedPtX)

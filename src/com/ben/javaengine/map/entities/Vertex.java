@@ -36,6 +36,10 @@ public class Vertex {
 		return this.z;
 	}
 	
+	public boolean hasPositiveCoordinates() {
+		return this.x >= 0.0;
+	}
+	
 	@Override
 	public String toString() {
 		return "[" + this.x + ", " + this.y + ", " + this.z + "]";

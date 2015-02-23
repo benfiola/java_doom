@@ -16,7 +16,7 @@ public class LogicMain {
 	public LogicMain() {
 		LOG.info("Initializing");
 		this.map = StaticMapGenerator.generateMap();
-		this.player = new Player(20.0, 20.0, 20.0, 0.0);
+		this.player = new Player(20.0, 20.0, Player.HEIGHT, 0.0);
 		new Thread(new Runnable() {
 			private long prevUpdate = new Date().getTime();
 			public void run() {
@@ -30,12 +30,12 @@ public class LogicMain {
 		}, "LogicMainThread").start();
 	}
 	
-	public void handleKeyPress(Integer keyCode) {
+	public synchronized void handleKeyPress(Integer keyCode) {
 		Integer diff = keyCode - 37;
 		this.player.addToMovementBuffer(diff);
 	}
 	
-	public void handleKeyRelease(Integer keyCode) {
+	public synchronized void handleKeyRelease(Integer keyCode) {
 		Integer diff = keyCode - 37;
 		this.player.removeFromMovementBuffer(diff);
 	}

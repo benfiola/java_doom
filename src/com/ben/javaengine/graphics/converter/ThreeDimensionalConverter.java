@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JPanel;
 
@@ -19,11 +20,11 @@ import com.ben.javaengine.map.entities.Wall;
 import com.ben.javaengine.utils.Rounder;
 
 public class ThreeDimensionalConverter extends RelativeTopDownConverter {
-	
+
 	public ThreeDimensionalConverter(JPanel panel) {
 		super(panel);
 	}
-	
+
 	@Override
 	public List<AbstractGraphicData> convert(LogicMain data) {
 		List<AbstractGraphicData> toReturn = new ArrayList<AbstractGraphicData>();
@@ -35,47 +36,56 @@ public class ThreeDimensionalConverter extends RelativeTopDownConverter {
 		Double windowWidth = (double) panel.getWidth();
 		Double xFactor = windowWidth / mapWidth;
 		Double yFactor = windowHeight / mapHeight;
-		
-		for (Sector r : m.getSectors()) {
-			List<LineGraphicData> lines = new ArrayList<LineGraphicData>();
 
+		for (Sector r : m.getSectors()) {
 			for (Wall w : r.getWalls()) {
-				Vertex tl = w.getTopLeft();
-				Vertex bl = w.getBottomLeft();
-				Vertex tr = w.getTopRight();
-				Vertex br = w.getBottomRight();
-				Point pTl = transformVertex(tl, p, xFactor, yFactor);
-				Point pTr = transformVertex(tr, p, xFactor, yFactor);
-				Point pBl = transformVertex(bl, p, xFactor, yFactor);
-				Point pBr = transformVertex(br, p, xFactor, yFactor);
+				List<LineGraphicData> lines = new ArrayList<LineGraphicData>();
+				Vertex topLeft = translateAndRotate(w.getTopLeft(), p);
+				Vertex topRight = translateAndRotate(w.getTopRight(), p);
+				Vertex bottomLeft = translateAndRotate(w.getBottomLeft(), p);
+				Vertex bottomRight = translateAndRotate(w.getBottomRight(), p);
+
+				Point topLeftPoint = transformVertex(topLeft, p, xFactor, yFactor);
+				Point topRightPoint = transformVertex(topRight, p, xFactor, yFactor);
+				Point bottomLeftPoint = transformVertex(bottomLeft, p, xFactor, yFactor);
+				Point bottomRightPoint = transformVertex(bottomRight, p, xFactor, yFactor);
 				
-				lines.add(new LineGraphicData(pTl.x, pTl.y, pTr.x,
-						pTr.y, Color.YELLOW));
-				lines.add(new LineGraphicData(pTr.x, pTr.y, pBr.x,
-						pBr.y, Color.YELLOW));
-				lines.add(new LineGraphicData(pBr.x, pBr.y, pBl.x,
-						pBl.y, Color.YELLOW));
-				lines.add(new LineGraphicData(pBl.x, pBl.y, pTl.x,
-						pTl.y, Color.YELLOW));
+				if(topLeft.getX() > 0 || topRight.getX() > 0) {
+					lines.add(new LineGraphicData(topLeftPoint.x, topLeftPoint.y, topRightPoint.x, topRightPoint.y, Color.YELLOW));
+				}
+				if(topRight.getX() > 0 || bottomRight.getX() > 0) {
+					lines.add(new LineGraphicData(topRightPoint.x, topRightPoint.y, bottomRightPoint.x, bottomRightPoint.y, Color.BLUE));
+				}
+				if(bottomRight.getX() > 0 || bottomLeft.getX() > 0) {
+					lines.add(new LineGraphicData(bottomRightPoint.x, bottomRightPoint.y, bottomLeftPoint.x, bottomLeftPoint.y, Color.GREEN));
+				}
+				if(bottomLeft.getX() > 0 || topLeft.getX() > 0) {
+					lines.add(new LineGraphicData(bottomLeftPoint.x, bottomLeftPoint.y, topLeftPoint.x, topLeftPoint.y, Color.RED));
+				}
 				toReturn.add(new WallGraphicData(lines, Color.RED));
 			}
 		}
 		return toReturn;
 	}
-	
-	private Point transformVertex(Vertex toTransform, Player p, Double xFactor, Double yFactor){
-		Vertex dV = translateAndRotate(toTransform, p);
-		Vertex eV = new Vertex( (double) (panel.getWidth()/2), (double) (panel.getHeight()/2), 0.0);
-	
-		Double zoomFactor = 10.0;
-		Double ratio = 45.0;
-		/*
-		Integer pBx = Rounder.round(eV.getX() + (eV.getY() * dV.getX())/dV.getY());
-		Integer pBy = Rounder.round(eV.getY() + (eV.getY() * dV.getZ())/dV.getY()); */
-		Integer pBx = Rounder.round( eV.getX() + ((zoomFactor * ratio) * (dV.getY()/dV.getX()) ) );
-		Integer pBy = Rounder.round( eV.getY() + (zoomFactor * (dV.getZ()/dV.getX()) ) );
-		Point toReturn = new Point(pBx, pBy);
-		return toReturn;
-	}
 
+	private Point transformVertex(Vertex toTransform, Player p, Double xFactor,
+			Double yFactor) {
+		double transformation = toTransform.getX();
+		
+		/*
+		 * negative transformations are killing me - need to read more about this.
+		 */
+		if(toTransform.getX() <= 0.0) {
+			transformation = 0.1;
+		}
+		double scaleX = toTransform.getY() / transformation;
+		double scaleY = toTransform.getZ() /transformation;
+		Double panelWidth = (double) this.panel.getWidth();
+		Double panelHeight = (double) this.panel.getHeight();
+		Double centerX = panelWidth/2;
+		Double centerY = panelHeight/2;
+		Integer xValue = Rounder.round(centerX + (Player.FIELD_OF_VIEW * (scaleX)));
+		Integer yValue = Rounder.round(centerY + (Player.FIELD_OF_VIEW * (scaleY)));
+		return new Point(xValue, yValue);
+	}
 }

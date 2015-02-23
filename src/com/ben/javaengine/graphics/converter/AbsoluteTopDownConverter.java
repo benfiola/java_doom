@@ -42,11 +42,19 @@ public class AbsoluteTopDownConverter extends AbstractLogicDataConverter {
 		//draw player
 		int pX = Rounder.round(playerX * xFactor);
 		int pY = Rounder.round(playerY * yFactor);
-		double transSlX = p.getX() + (Player.SIGHT_LINE * Math.cos(Math.toRadians(p.getDirection())));
-		double transSlY = p.getY() + (Player.SIGHT_LINE * Math.sin(Math.toRadians(p.getDirection())));
+		PlayerGraphicData pGfx = new PlayerGraphicData(pX, pY, Color.BLUE);
+		toReturn.add(pGfx);
+		
+		double transSlX = p.getX() + (Player.SIGHT_LINE * Math.cos(Math.toRadians(p.getDirection() + (Player.FIELD_OF_VIEW/2))));
+		double transSlY = p.getY() + (Player.SIGHT_LINE * Math.sin(Math.toRadians(p.getDirection() + (Player.FIELD_OF_VIEW/2))));
 		int slX = Rounder.round(transSlX * xFactor);
 		int slY = Rounder.round(transSlY * yFactor);
-		toReturn.add(new PlayerGraphicData(pX, pY, slX, slY, Color.BLUE));
+		pGfx.addSightLine(slX, slY);
+		transSlX = p.getX() + (Player.SIGHT_LINE * Math.cos(Math.toRadians(p.getDirection() - (Player.FIELD_OF_VIEW/2))));
+		transSlY = p.getY() + (Player.SIGHT_LINE * Math.sin(Math.toRadians(p.getDirection() - (Player.FIELD_OF_VIEW/2))));
+		slX = Rounder.round(transSlX * xFactor);
+		slY = Rounder.round(transSlY * yFactor);
+		pGfx.addSightLine(slX, slY);
 		
 		//here we draw the walls in our rooms
 		for(Sector r : m.getSectors()) {

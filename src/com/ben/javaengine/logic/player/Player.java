@@ -5,13 +5,13 @@ import org.apache.log4j.Logger;
 public class Player {
 	private static Logger LOG = Logger.getLogger(Player.class);
 
-	public static Double HEIGHT = 20.0;
+	public static Double HEIGHT = 2.0;
 	public static Double SIGHT_LINE = 3.0;
 	
 	private static Double ROTATE_SPEED = .6;
 
 	private static Double MOVE_SPEED = .06;
-	private static Double FIELD_OF_VIEW = 75.0;
+	public static Double FIELD_OF_VIEW = 90.0;
 	
 	private Integer LEFT = 1;
 	private Integer UP = 2;
@@ -101,12 +101,12 @@ public class Player {
 		movePlayer(movementBuffer, ((double) timeSinceLastUpdate) / 2.0);
 	}
 	
-	public void addToMovementBuffer(Integer key) {
+	public synchronized void addToMovementBuffer(Integer key) {
 		Integer bitMask = 1 << key;
 		movementBuffer |= bitMask;
 	}
 	
-	public void removeFromMovementBuffer(Integer key) {
+	public synchronized void removeFromMovementBuffer(Integer key) {
 		Integer bitMask = ~(1<<key);
 		movementBuffer &= bitMask;
 	}
