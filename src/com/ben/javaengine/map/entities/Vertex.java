@@ -1,5 +1,7 @@
 package com.ben.javaengine.map.entities;
 
+import java.util.Vector;
+
 import org.apache.log4j.Logger;
 
 /*
@@ -38,6 +40,23 @@ public class Vertex {
 	
 	public boolean hasPositiveCoordinates() {
 		return this.x >= 0.0;
+	}
+	
+	public static Vertex crossProduct(Vertex a, Vertex b) {
+		return new Vertex(a.getY() * b.getZ() - a.getZ() * b.getY(), a.getZ() * b.getX() - a.getX() * b.getZ(), a.getX() * b.getY() - a.getY() - b.getX());
+	}
+	
+	public static Vertex normalize(Vertex a) {
+		Double length = getLength(a);
+		return new Vertex(a.getX()/length, a.getY()/length, a.getZ()/length);
+	}
+	
+	public static Double getLength(Vertex a) {
+		return Math.sqrt((a.getX() * a.getX()) + (a.getY() * a.getY()) + (a.getZ() * a.getZ()));
+	}
+	
+	public static Double dotProduct(Vertex a, Vertex b) {
+		return (a.getX() * b.getX() + a.getY() * b.getY() + a.getZ() * b.getZ());
 	}
 	
 	@Override

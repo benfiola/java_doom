@@ -11,7 +11,8 @@ public class Player {
 	private static Double ROTATE_SPEED = .6;
 
 	private static Double MOVE_SPEED = .06;
-	public static Double FIELD_OF_VIEW = 90.0;
+	public static Double HORIZONTAL_FIELD_OF_VIEW = 90.0;
+	public static Double VERTICAL_FIELD_OF_VIEW = 45.0;
 	
 	private Integer LEFT = 1;
 	private Integer UP = 2;

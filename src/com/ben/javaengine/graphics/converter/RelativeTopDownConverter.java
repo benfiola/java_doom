@@ -45,14 +45,14 @@ public class RelativeTopDownConverter extends AbstractLogicDataConverter {
 		PlayerGraphicData pGfx = new PlayerGraphicData(pX, pY, Color.BLUE);
 		toReturn.add(pGfx);
 		
-		double transSlX = (windowWidth/2) + ((Player.SIGHT_LINE * Math.cos(Math.toRadians(Player.FIELD_OF_VIEW/2))) * xFactor);
-		double transSlY = (windowHeight/2) + ((Player.SIGHT_LINE * Math.sin(Math.toRadians(Player.FIELD_OF_VIEW/2))) * yFactor);
+		double transSlX = (windowWidth/2) + ((Player.SIGHT_LINE * Math.cos(Math.toRadians(Player.HORIZONTAL_FIELD_OF_VIEW/2))) * xFactor);
+		double transSlY = (windowHeight/2) + ((Player.SIGHT_LINE * Math.sin(Math.toRadians(Player.HORIZONTAL_FIELD_OF_VIEW/2))) * yFactor);
 		int slX = Rounder.round(transSlX);
 		int slY = Rounder.round(transSlY);
 		pGfx.addSightLine(slX, slY);
 		
-		transSlX = (windowWidth/2) + ((Player.SIGHT_LINE * Math.cos(Math.toRadians(-Player.FIELD_OF_VIEW/2))) * xFactor);
-		transSlY = (windowHeight/2) + ((Player.SIGHT_LINE * Math.sin(Math.toRadians(-Player.FIELD_OF_VIEW/2))) * yFactor);
+		transSlX = (windowWidth/2) + ((Player.SIGHT_LINE * Math.cos(Math.toRadians(-Player.HORIZONTAL_FIELD_OF_VIEW/2))) * xFactor);
+		transSlY = (windowHeight/2) + ((Player.SIGHT_LINE * Math.sin(Math.toRadians(-Player.HORIZONTAL_FIELD_OF_VIEW/2))) * yFactor);
 		slX = Rounder.round(transSlX);
 		slY = Rounder.round(transSlY);
 		pGfx.addSightLine(slX, slY);
