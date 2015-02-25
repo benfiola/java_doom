@@ -14,11 +14,12 @@ import com.ben.javaengine.logic.LogicMain;
 import com.ben.javaengine.logic.map.Map;
 import com.ben.javaengine.logic.player.Player;
 import com.ben.javaengine.map.entities.Sector;
+import com.ben.javaengine.map.entities.Vector;
 import com.ben.javaengine.map.entities.Vertex;
 import com.ben.javaengine.map.entities.Wall;
 import com.ben.javaengine.utils.Rounder;
 
-public class ThreeDimensionalConverter extends RelativeTopDownConverter {
+public class ThreeDimensionalConverter extends AbstractLogicDataConverter {
 	
 	private Frustrum frustrum;
 	
@@ -32,18 +33,14 @@ public class ThreeDimensionalConverter extends RelativeTopDownConverter {
 		List<AbstractGraphicData> toReturn = new ArrayList<AbstractGraphicData>();
 		Map m = data.getMap();
 		Player p = data.getPlayer();
-		Double mapWidth = m.getWidth();
-		Double mapHeight = m.getHeight();
-		Double windowHeight = (double) panel.getHeight();
-		Double windowWidth = (double) panel.getWidth();
 
 		for (Sector r : m.getSectors()) {
 			for (Wall w : r.getWalls()) {
 				List<LineGraphicData> lines = new ArrayList<LineGraphicData>();
-				Vertex topLeft = translateAndRotate(w.getTopLeft(), p);
-				Vertex topRight = translateAndRotate(w.getTopRight(), p);
-				Vertex bottomLeft = translateAndRotate(w.getBottomLeft(), p);
-				Vertex bottomRight = translateAndRotate(w.getBottomRight(), p);
+				Vertex topLeft = w.getTopLeft().toCameraCoordinate(p);
+				Vertex topRight = w.getTopRight().toCameraCoordinate(p);
+				Vertex bottomLeft = w.getBottomLeft().toCameraCoordinate(p);
+				Vertex bottomRight = w.getBottomRight().toCameraCoordinate(p);
 				
 				VertexPair line1 = frustrum.getIntersection(topLeft, topRight);
 				VertexPair line2 = frustrum.getIntersection(topRight, bottomRight);
@@ -63,7 +60,7 @@ public class ThreeDimensionalConverter extends RelativeTopDownConverter {
 	private void addLinesToDraw(Vertex v1, Vertex v2, List<LineGraphicData> lines) {
 		Point p1 = transformVertex(v1);
 		Point p2 = transformVertex(v2);
-		lines.add(new LineGraphicData(p1.x, p1.y, p2.x, p2.y, Color.YELLOW));
+		lines.add(new LineGraphicData(p1, p2, Color.YELLOW));
 	}
 	
 	private Point transformVertex(Vertex toTransform) {
@@ -83,30 +80,31 @@ public class ThreeDimensionalConverter extends RelativeTopDownConverter {
 
 	private class Plane {
 		private Double distance;
-		private Vertex normal;
+		private Vector normal;
 
-		public Plane(Vertex normal, Double distance) {
+		public Plane(Vector normal, Double distance) {
 			this.distance = distance;
 			this.normal = normal;
 		}
 
-		public Double getDistance(Vertex v) {
-			Double distance = Vertex.dotProduct(v, normal) - this.distance;
+		public Double getDistance(Vertex point) {
+			Vector v = new Vector(point);
+			Double distance = Vector.dotProduct(v, normal) - this.distance;
 			return distance;
 		}
 
-		public boolean hasIntersection(Vertex v1, Vertex v2) {
-			return (getDistance(v1) < 0 || getDistance(v2) < 0) && (!((getDistance(v1) < 0) && (getDistance(v2) < 0)));
+		public boolean hasIntersection(Vertex point1, Vertex point2) {
+			return (getDistance(point1) < 0 || getDistance(point2) < 0) && (!((getDistance(point1) < 0) && (getDistance(point2) < 0)));
 		}
 
-		public Vertex getIntersectionPoint(Vertex v1, Vertex v2) {
-			Double distanceP1 = getDistance(v1);
-			Double distanceP2 = getDistance(v2);
+		public Vertex getIntersectionPoint(Vertex point1, Vertex point2) {
+			Double distanceP1 = getDistance(point1);
+			Double distanceP2 = getDistance(point2);
 			Double intersectionFactor = distanceP1 / (distanceP1 - distanceP2);
-			return new Vertex(v1.getX() + intersectionFactor
-					* (v2.getX() - v1.getX()), v1.getY() + intersectionFactor
-					* (v2.getY() - v1.getY()), v1.getZ() + intersectionFactor
-					* (v2.getZ() - v1.getZ()));
+			return new Vertex(point1.getX() + intersectionFactor
+					* (point2.getX() - point1.getX()), point1.getY() + intersectionFactor
+					* (point2.getY() - point1.getY()), point1.getZ() + intersectionFactor
+					* (point2.getZ() - point1.getZ()));
 		}
 	}
 
@@ -127,12 +125,12 @@ public class ThreeDimensionalConverter extends RelativeTopDownConverter {
 			Double cosVertical = Math.cos(Math
 					.toDegrees(Player.VERTICAL_FIELD_OF_VIEW));
 
-			left = new Plane(new Vertex(sinHorizontal, cosHorizontal, 0.0), 0.0);
-			right = new Plane(new Vertex(sinHorizontal, -cosHorizontal, 0.0),
+			left = new Plane(new Vector(sinHorizontal, cosHorizontal, 0.0), 0.0);
+			right = new Plane(new Vector(sinHorizontal, -cosHorizontal, 0.0),
 					0.0);
-			top = new Plane(new Vertex(sinVertical, 0.0, cosVertical), 0.0);
-			bottom = new Plane(new Vertex(sinVertical, 0.0, -cosVertical), 0.0);
-			near = new Plane(new Vertex(1.0, 0.0, 0.0), -1.0);
+			top = new Plane(new Vector(sinVertical, 0.0, cosVertical), 0.0);
+			bottom = new Plane(new Vector(sinVertical, 0.0, -cosVertical), 0.0);
+			near = new Plane(new Vector(1.0, 0.0, 0.0), -1.0);
 		}
 
 		public VertexPair getIntersection(Vertex v1, Vertex v2) {

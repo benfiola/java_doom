@@ -1,8 +1,8 @@
 package com.ben.javaengine.map.entities;
 
-import java.util.Vector;
-
 import org.apache.log4j.Logger;
+
+import com.ben.javaengine.logic.player.Player;
 
 /*
  * This class represents a point in 3D space
@@ -38,29 +38,41 @@ public class Vertex {
 		return this.z;
 	}
 	
-	public boolean hasPositiveCoordinates() {
-		return this.x >= 0.0;
+	public void setX(Double x) {
+		this.x = x;
 	}
 	
-	public static Vertex crossProduct(Vertex a, Vertex b) {
-		return new Vertex(a.getY() * b.getZ() - a.getZ() * b.getY(), a.getZ() * b.getX() - a.getX() * b.getZ(), a.getX() * b.getY() - a.getY() - b.getX());
+	public void setY(Double y) {
+		this.y = y;
 	}
 	
-	public static Vertex normalize(Vertex a) {
-		Double length = getLength(a);
-		return new Vertex(a.getX()/length, a.getY()/length, a.getZ()/length);
+	public void setZ(Double z) {
+		this.z = z;
 	}
 	
-	public static Double getLength(Vertex a) {
-		return Math.sqrt((a.getX() * a.getX()) + (a.getY() * a.getY()) + (a.getZ() * a.getZ()));
-	}
-	
-	public static Double dotProduct(Vertex a, Vertex b) {
-		return (a.getX() * b.getX() + a.getY() * b.getY() + a.getZ() * b.getZ());
+	public void updateVertex(Double x, Double y, Double z) {
+		setX(x);
+		setY(y);
+		setZ(z);
 	}
 	
 	@Override
 	public String toString() {
 		return "[" + this.x + ", " + this.y + ", " + this.z + "]";
+	}
+	
+	public Vertex toCameraCoordinate(Player p) {
+		double translatedPtX = getX() - p.getPosition().getX();
+		double translatedPtY = getY() - p.getPosition().getY();
+		double translatedPtZ = p.getPosition().getZ() - getZ();
+		double angleTranslation = -p.getDirection();
+		
+		double rotatedPtX = (translatedPtX)
+				* Math.cos(Math.toRadians(angleTranslation)) - (translatedPtX)
+				* Math.sin(Math.toRadians(angleTranslation));
+		double rotatedPtY = (translatedPtY)
+				* Math.sin(Math.toRadians(angleTranslation)) + (translatedPtY)
+				* Math.cos(Math.toRadians(angleTranslation));
+		return new Vertex(rotatedPtX, rotatedPtY, translatedPtZ);
 	}
 }

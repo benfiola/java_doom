@@ -34,27 +34,17 @@ public class AbsoluteTopDownConverter extends AbstractLogicDataConverter {
 		Double mapHeight = m.getHeight();
 		Double windowHeight = (double) panel.getHeight();
 		Double windowWidth = (double) panel.getWidth();
-		Double playerX = p.getX();
-		Double playerY = p.getY();
 		Double xFactor = windowWidth / mapWidth;
 		Double yFactor = windowHeight / mapHeight;
 		
 		//draw player
-		int pX = Rounder.round(playerX * xFactor);
-		int pY = Rounder.round(playerY * yFactor);
-		PlayerGraphicData pGfx = new PlayerGraphicData(pX, pY, Color.BLUE);
-		toReturn.add(pGfx);
-		
-		double transSlX = p.getX() + (Player.SIGHT_LINE * Math.cos(Math.toRadians(p.getDirection() + (Player.HORIZONTAL_FIELD_OF_VIEW/2))));
-		double transSlY = p.getY() + (Player.SIGHT_LINE * Math.sin(Math.toRadians(p.getDirection() + (Player.HORIZONTAL_FIELD_OF_VIEW/2))));
-		int slX = Rounder.round(transSlX * xFactor);
-		int slY = Rounder.round(transSlY * yFactor);
-		pGfx.addSightLine(slX, slY);
-		transSlX = p.getX() + (Player.SIGHT_LINE * Math.cos(Math.toRadians(p.getDirection() - (Player.HORIZONTAL_FIELD_OF_VIEW/2))));
-		transSlY = p.getY() + (Player.SIGHT_LINE * Math.sin(Math.toRadians(p.getDirection() - (Player.HORIZONTAL_FIELD_OF_VIEW/2))));
-		slX = Rounder.round(transSlX * xFactor);
-		slY = Rounder.round(transSlY * yFactor);
-		pGfx.addSightLine(slX, slY);
+		Point playerPoint = transformVertex(p.getPosition(), xFactor, yFactor);
+		List<Point> playerSightLinePoints = new ArrayList<Point>();
+		for(Vertex sl : p.getConeOfVision()) {
+			Point transform = transformVertex(sl, xFactor, yFactor);
+			playerSightLinePoints.add(transform);
+		}
+		toReturn.add(new PlayerGraphicData(playerPoint, playerSightLinePoints, Color.BLUE));
 		
 		//here we draw the walls in our rooms
 		for(Sector r : m.getSectors()) {
@@ -67,19 +57,19 @@ public class AbsoluteTopDownConverter extends AbstractLogicDataConverter {
 				
 				Point p1 = transformVertex(tl, xFactor, yFactor);
 				Point p2  = transformVertex(tr, xFactor, yFactor);
-				lines.add(new LineGraphicData(p1.x, p1.y, p2.x, p2.y, Color.YELLOW));
+				lines.add(new LineGraphicData(p1, p2, Color.YELLOW));
 				
 				p1 = transformVertex(tr, xFactor, yFactor);
 				p2  = transformVertex(br, xFactor, yFactor);
-				lines.add(new LineGraphicData(p1.x, p1.y, p2.x, p2.y, Color.YELLOW));
+				lines.add(new LineGraphicData(p1, p2, Color.YELLOW));
 				
 				p1 = transformVertex(br, xFactor, yFactor);
 				p2  = transformVertex(bl, xFactor, yFactor);
-				lines.add(new LineGraphicData(p1.x, p1.y, p2.x, p2.y, Color.YELLOW));
+				lines.add(new LineGraphicData(p1, p2, Color.YELLOW));
 				
 				p1 = transformVertex(tl, xFactor, yFactor);
 				p2  = transformVertex(bl, xFactor, yFactor);
-				lines.add(new LineGraphicData(p1.x, p1.y, p2.x, p2.y, Color.YELLOW));
+				lines.add(new LineGraphicData(p1, p2, Color.YELLOW));
 				toReturn.add(new WallGraphicData(lines, Color.RED));
 			}
 		}

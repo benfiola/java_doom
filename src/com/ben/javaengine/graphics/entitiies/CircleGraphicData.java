@@ -2,17 +2,16 @@ package com.ben.javaengine.graphics.entitiies;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 
 public class CircleGraphicData extends AbstractGraphicData {
 	private Integer diameterHeight;
 	private Integer diameterWidth;
-	private Integer x;
-	private Integer y;
+	private Point p;
 	
-	public CircleGraphicData(Integer x, Integer y, Integer diameterWidth, Integer diameterHeight, Color color) {
+	public CircleGraphicData(Point p, Integer diameterWidth, Integer diameterHeight, Color color) {
 		super(color);
-		this.x = x;
-		this.y = y;
+		this.p = p;
 		this.diameterWidth = diameterWidth;
 		this.diameterHeight = diameterHeight;
 	}
@@ -20,7 +19,7 @@ public class CircleGraphicData extends AbstractGraphicData {
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(color);
-		g.fillOval(x-(diameterWidth/2), y-(diameterHeight/2), diameterWidth, diameterHeight);
+		g.fillOval(p.x-(diameterWidth/2), p.y-(diameterHeight/2), diameterWidth, diameterHeight);
 	}
 	
 	
