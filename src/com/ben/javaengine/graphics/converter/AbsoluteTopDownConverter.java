@@ -30,18 +30,12 @@ public class AbsoluteTopDownConverter extends AbstractLogicDataConverter {
 		List<AbstractGraphicData> toReturn = new ArrayList<AbstractGraphicData>();
 		Player p = data.getPlayer();
 		Map m = data.getMap();
-		Double mapWidth = m.getWidth();
-		Double mapHeight = m.getHeight();
-		Double windowHeight = (double) panel.getHeight();
-		Double windowWidth = (double) panel.getWidth();
-		Double xFactor = windowWidth / mapWidth;
-		Double yFactor = windowHeight / mapHeight;
 		
 		//draw player
-		Point playerPoint = transformVertex(p.getPosition(), xFactor, yFactor);
+		Point playerPoint = transformVertex(p.getPosition());
 		List<Point> playerSightLinePoints = new ArrayList<Point>();
 		for(Vertex sl : p.getConeOfVision()) {
-			Point transform = transformVertex(sl, xFactor, yFactor);
+			Point transform = transformVertex(sl);
 			playerSightLinePoints.add(transform);
 		}
 		toReturn.add(new PlayerGraphicData(playerPoint, playerSightLinePoints, Color.BLUE));
@@ -55,20 +49,20 @@ public class AbsoluteTopDownConverter extends AbstractLogicDataConverter {
 				Vertex bl = w.getBottomLeft();
 				Vertex br = w.getBottomRight();
 				
-				Point p1 = transformVertex(tl, xFactor, yFactor);
-				Point p2  = transformVertex(tr, xFactor, yFactor);
+				Point p1 = transformVertex(tl);
+				Point p2  = transformVertex(tr);
 				lines.add(new LineGraphicData(p1, p2, Color.YELLOW));
 				
-				p1 = transformVertex(tr, xFactor, yFactor);
-				p2  = transformVertex(br, xFactor, yFactor);
+				p1 = transformVertex(tr);
+				p2  = transformVertex(br);
 				lines.add(new LineGraphicData(p1, p2, Color.YELLOW));
 				
-				p1 = transformVertex(br, xFactor, yFactor);
-				p2  = transformVertex(bl, xFactor, yFactor);
+				p1 = transformVertex(br);
+				p2  = transformVertex(bl);
 				lines.add(new LineGraphicData(p1, p2, Color.YELLOW));
 				
-				p1 = transformVertex(tl, xFactor, yFactor);
-				p2  = transformVertex(bl, xFactor, yFactor);
+				p1 = transformVertex(tl);
+				p2  = transformVertex(bl);
 				lines.add(new LineGraphicData(p1, p2, Color.YELLOW));
 				toReturn.add(new WallGraphicData(lines, Color.RED));
 			}
@@ -77,8 +71,8 @@ public class AbsoluteTopDownConverter extends AbstractLogicDataConverter {
 		return toReturn;
 	}
 	
-	private Point transformVertex(Vertex toTransform, Double xFactor, Double yFactor) {
-		return new Point(Rounder.round(toTransform.getX() * xFactor), Rounder.round(toTransform.getY() * yFactor));
+	private Point transformVertex(Vertex toTransform) {
+		return new Point(Rounder.round(toTransform.getX() * zoomX), Rounder.round(toTransform.getY() * zoomY));
 	}
 
 }

@@ -21,6 +21,7 @@ abstract public class AbstractGameCanvas extends JPanel {
 	}
 	
 	public void receiveData(LogicMain toConvert) {
+		converter.process(toConvert);
 		data = converter.convert(toConvert);
 	}
 	

@@ -68,9 +68,9 @@ public class Vertex {
 		double angleTranslation = -p.getDirection();
 		
 		double rotatedPtX = (translatedPtX)
-				* Math.cos(Math.toRadians(angleTranslation)) - (translatedPtX)
+				* Math.cos(Math.toRadians(angleTranslation)) - (translatedPtY)
 				* Math.sin(Math.toRadians(angleTranslation));
-		double rotatedPtY = (translatedPtY)
+		double rotatedPtY = (translatedPtX)
 				* Math.sin(Math.toRadians(angleTranslation)) + (translatedPtY)
 				* Math.cos(Math.toRadians(angleTranslation));
 		return new Vertex(rotatedPtX, rotatedPtY, translatedPtZ);

@@ -115,12 +115,12 @@ public class Player {
 		movePlayer(movementBuffer, ((double) timeSinceLastUpdate));
 	}
 
-	public synchronized void addToMovementBuffer(Integer key) {
+	public void addToMovementBuffer(Integer key) {
 		Integer bitMask = 1 << key;
 		movementBuffer |= bitMask;
 	}
 
-	public synchronized void removeFromMovementBuffer(Integer key) {
+	public void removeFromMovementBuffer(Integer key) {
 		Integer bitMask = ~(1 << key);
 		movementBuffer &= bitMask;
 	}

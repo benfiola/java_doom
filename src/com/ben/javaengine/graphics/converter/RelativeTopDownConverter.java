@@ -32,18 +32,12 @@ public class RelativeTopDownConverter extends AbstractLogicDataConverter {
 		// with the other top down display - we can remove this later).
 		Player p = data.getPlayer();
 		Map m = data.getMap();
-		Double mapWidth = m.getWidth();
-		Double mapHeight = m.getHeight();
-		Double windowHeight = (double) panel.getHeight();
-		Double windowWidth = (double) panel.getWidth();
-		Double xFactor = windowWidth / mapWidth;
-		Double yFactor = windowHeight / mapHeight;
 
 		// draw player - player will be at center of viewport - easy enough.
-		Point playerPoint = transformVertex(p.getPosition(), p, xFactor, yFactor);
+		Point playerPoint = transformVertex(p.getPosition(), p);
 		List<Point> slPoints = new ArrayList<Point>();
 		for(Vertex slVertex : p.getConeOfVision()) {
-			Point transformed = transformVertex(slVertex, p, xFactor, yFactor);
+			Point transformed = transformVertex(slVertex, p);
 			slPoints.add(transformed);
 		}
 		PlayerGraphicData pGfx = new PlayerGraphicData(playerPoint, slPoints, Color.BLUE);
@@ -58,20 +52,20 @@ public class RelativeTopDownConverter extends AbstractLogicDataConverter {
 				Vertex tr = w.getTopRight();
 				Vertex br = w.getBottomRight();
 				
-				Point p1 = transformVertex(tl, p, xFactor, yFactor);
-				Point p2 = transformVertex(tr, p, xFactor, yFactor);
+				Point p1 = transformVertex(tl, p);
+				Point p2 = transformVertex(tr, p);
 				lines.add(new LineGraphicData(p1, p2, Color.YELLOW));
 				
-				p1 = transformVertex(tr, p, xFactor, yFactor);
-				p2 = transformVertex(br, p, xFactor, yFactor);
+				p1 = transformVertex(tr, p);
+				p2 = transformVertex(br, p);
 				lines.add(new LineGraphicData(p1, p2, Color.YELLOW));
 				
-				p1 = transformVertex(bl, p, xFactor, yFactor);
-				p2 = transformVertex(br, p, xFactor, yFactor);
+				p1 = transformVertex(bl, p);
+				p2 = transformVertex(br, p);
 				lines.add(new LineGraphicData(p1, p2, Color.YELLOW));
 				
-				p1 = transformVertex(br, p, xFactor, yFactor);
-				p2 = transformVertex(tr, p, xFactor, yFactor);
+				p1 = transformVertex(br, p);
+				p2 = transformVertex(tr, p);
 				lines.add(new LineGraphicData(p1, p2, Color.YELLOW));
 				toReturn.add(new WallGraphicData(lines, Color.RED));
 			}
@@ -79,16 +73,13 @@ public class RelativeTopDownConverter extends AbstractLogicDataConverter {
 		return toReturn;
 	}
 	
-	private Point transformVertex(Vertex toTransform, Player p, Double xFactor, Double yFactor) {
-		int offsetX = panel.getWidth() / 2;
-		int offsetY = panel.getHeight() / 2;
-		
+	private Point transformVertex(Vertex toTransform, Player p) {		
 		Vertex translatedVertex = toTransform.toCameraCoordinate(p);
 		
-		int ptX = Rounder.round(offsetX
-				+ (translatedVertex.getX() * xFactor));
-		int ptY = Rounder.round(offsetY
-				+ (translatedVertex.getY() * yFactor));
+		int ptX = Rounder.round(screenCenter.getX()
+				+ (translatedVertex.getX() * zoomX));
+		int ptY = Rounder.round(screenCenter.getY()
+				+ (translatedVertex.getY() * zoomY));
 		return new Point(ptX, ptY);	
 	}
 }

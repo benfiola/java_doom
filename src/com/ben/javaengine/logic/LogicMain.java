@@ -30,12 +30,12 @@ public class LogicMain {
 		}, "LogicMainThread").start();
 	}
 	
-	public synchronized void handleKeyPress(Integer keyCode) {
+	public void handleKeyPress(Integer keyCode) {
 		Integer diff = keyCode - 37;
 		this.player.addToMovementBuffer(diff);
 	}
 	
-	public synchronized void handleKeyRelease(Integer keyCode) {
+	public void handleKeyRelease(Integer keyCode) {
 		Integer diff = keyCode - 37;
 		this.player.removeFromMovementBuffer(diff);
 	}
