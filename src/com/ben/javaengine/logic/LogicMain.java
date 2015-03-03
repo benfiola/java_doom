@@ -25,6 +25,7 @@ public class LogicMain {
 					long timeSinceLastUpdate = currTime - prevUpdate;
 					player.update(timeSinceLastUpdate);
 					prevUpdate = currTime;
+					try{Thread.sleep(30);}catch(Exception e) {}
 				}
 			}
 		}, "LogicMainThread").start();

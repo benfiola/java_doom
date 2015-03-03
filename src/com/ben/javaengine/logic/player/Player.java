@@ -16,8 +16,6 @@ public class Player {
 	private static Double ROTATE_SPEED = .6;
 
 	private static Double MOVE_SPEED = .06;
-	public static Double HORIZONTAL_FIELD_OF_VIEW = 90.0;
-	public static Double VERTICAL_FIELD_OF_VIEW = 45.0;
 
 	private Integer LEFT = 1;
 	private Integer UP = 2;
@@ -39,7 +37,8 @@ public class Player {
 
 	public List<Vertex> getConeOfVision() {
 		List<Vertex> toReturn = new ArrayList<Vertex>();
-
+		
+		/*
 		Vertex one = new Vertex(position.getX()
 				+ (SIGHT_LINE * Math.cos(Math.toRadians(getDirection()
 						- (HORIZONTAL_FIELD_OF_VIEW / 2)))), position.getY()
@@ -52,6 +51,7 @@ public class Player {
 						+ (HORIZONTAL_FIELD_OF_VIEW / 2)))), position.getZ());
 		toReturn.add(one);
 		toReturn.add(two);
+		*/
 		return toReturn;
 	}
 

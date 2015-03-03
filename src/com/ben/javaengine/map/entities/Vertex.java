@@ -10,9 +10,9 @@ import com.ben.javaengine.logic.player.Player;
 public class Vertex {
 	private static final Logger LOG = Logger.getLogger(Vertex.class);
 
-	private Double x;
-	private Double y;
-	private Double z;
+	protected Double x;
+	protected Double y;
+	protected Double z;
 	
 	public Vertex(Double x, Double y, Double z) {
 		this.x = x;

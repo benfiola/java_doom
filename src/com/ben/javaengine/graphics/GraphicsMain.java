@@ -21,6 +21,7 @@ public class GraphicsMain {
 			public void run() {
 				while(true) {
 					EventManager.publish(new LogicRequestEvent(this.getClass(), "Requesting logic data", AbstractEvent.STATUS_OK));
+					try{Thread.sleep(30);}catch(Exception e) {}
 				}
 			}
 		}, "GraphicsMainThread").start();

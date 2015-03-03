@@ -16,6 +16,7 @@ abstract public class AbstractLogicDataConverter {
 	protected Double zoomX;
 	protected Double zoomY;
 	protected Point screenCenter;
+	protected Double aspectRatio;
 	
 	public AbstractLogicDataConverter(JPanel panel) {
 		this.panel = panel;
@@ -30,6 +31,7 @@ abstract public class AbstractLogicDataConverter {
 		zoomX = windowWidth / mapWidth;
 		zoomY = windowHeight / mapHeight;
 		screenCenter = new Point(panel.getWidth()/2, panel.getHeight()/2);
+		aspectRatio = ((double) panel.getWidth()/(double) panel.getHeight());
 	}
 	
 	abstract public List<AbstractGraphicData> convert(LogicMain data);
