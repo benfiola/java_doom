@@ -25,10 +25,8 @@ public class SaveOption extends NavigableFooterOption {
 				ConfigurableOption configOpt = (ConfigurableOption) opt;
 				ConfigurationProperty prop = configOpt.getProperty();
 				try {
-					if(configOpt.getNewValue() != null && !prop.getDefaultValue().equals(configOpt.getNewValue())) {
-						ConfigurationProperty toChange = config.getProperty(prop.getKey());
-						toChange.setValue(configOpt.getNewValue());
-					}
+					ConfigurationProperty toChange = config.getProperty(prop.getKey());
+					toChange.setValue(configOpt.getNewValue());
 				} catch(Exception e) {
 					LOG.error("Error parsing new value.", e);
 					return new OptionsMenuState();
