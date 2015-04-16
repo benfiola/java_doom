@@ -3,6 +3,8 @@ package com.ben.javaengine;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
+import com.ben.javaengine.configuration.Configuration;
+
 /*
  * This is the Main class of our application.  Here we have
  * the main application loop, which will keep our application running
@@ -13,5 +15,10 @@ public class Main {
 	public static void main(String[] args) {
 		BasicConfigurator.configure();
 		LOG.info("Initializing");
+		while(!Controller.getInstance().wantsToExit()) {
+			
+		}
+		LOG.info("Exiting");
+		System.exit(Controller.getInstance().getExitCode());
 	}
 }
