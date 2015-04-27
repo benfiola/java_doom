@@ -3,8 +3,6 @@ package com.ben.javaengine;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
-import com.ben.javaengine.configuration.Configuration;
-
 /*
  * This is the Main class of our application.  Here we have
  * the main application loop, which will keep our application running

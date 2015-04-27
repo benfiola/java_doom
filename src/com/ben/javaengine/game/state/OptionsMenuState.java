@@ -6,14 +6,14 @@ import com.ben.javaengine.Controller;
 import com.ben.javaengine.configuration.Configuration;
 import com.ben.javaengine.configuration.ConfigurationProperty;
 import com.ben.javaengine.game.event.AbstractEvent;
-import com.ben.javaengine.game.event.options.EditOptionEvent;
-import com.ben.javaengine.game.event.options.NextOptionEvent;
-import com.ben.javaengine.game.event.options.PreviousOptionEvent;
-import com.ben.javaengine.game.event.options.SelectOptionEvent;
-import com.ben.javaengine.options.BackOption;
-import com.ben.javaengine.options.ConfigurableOption;
-import com.ben.javaengine.options.NavigableOption;
-import com.ben.javaengine.options.SaveOption;
+import com.ben.javaengine.game.event.menu.NextOptionEvent;
+import com.ben.javaengine.game.event.menu.PreviousOptionEvent;
+import com.ben.javaengine.game.event.menu.SelectOptionEvent;
+import com.ben.javaengine.game.event.menu.options.EditOptionEvent;
+import com.ben.javaengine.menubuttons.ConfigurableButton;
+import com.ben.javaengine.menubuttons.NavigableButton;
+import com.ben.javaengine.menubuttons.options.BackButton;
+import com.ben.javaengine.menubuttons.options.SaveButton;
 
 public class OptionsMenuState extends AbstractMenuState {
 	private boolean isEditing;
@@ -42,11 +42,11 @@ public class OptionsMenuState extends AbstractMenuState {
 				previousOption();
 			}
 		} else if(e instanceof SelectOptionEvent) {
-			if(options.get(selectedIndex) instanceof NavigableOption) {
-				NavigableOption opt = (NavigableOption) options.get(selectedIndex);
-				Controller.getInstance().updateState(opt.nextState());	
+			if(options.get(selectedIndex) instanceof NavigableButton) {
+				NavigableButton opt = (NavigableButton) options.get(selectedIndex);
+				Controller.getInstance().updateState(opt.getNextState());	
 			} else if(isEditing()) {
-				ConfigurableOption confOpt = (ConfigurableOption) options.get(selectedIndex);
+				ConfigurableButton confOpt = (ConfigurableButton) options.get(selectedIndex);
  				confOpt.setValue();
 			}
 			isEditing(!isEditing);
@@ -54,7 +54,7 @@ public class OptionsMenuState extends AbstractMenuState {
 			if(isEditing()) {
 				EditOptionEvent event = (EditOptionEvent) e;
 				KeyEvent key = event.getEvent();
-				ConfigurableOption option = (ConfigurableOption) options.get(selectedIndex);
+				ConfigurableButton option = (ConfigurableButton) options.get(selectedIndex);
 				String currValue = option.getNewValueString();
 				if(key.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
 					if(currValue.length() > 0) {
@@ -74,10 +74,10 @@ public class OptionsMenuState extends AbstractMenuState {
 	protected void populateOptions() {
 		Configuration config = new Configuration();
 		for(ConfigurationProperty prop : config.getProperties()) {
-			options.add(new ConfigurableOption(prop));
+			options.add(new ConfigurableButton(prop));
 		}
-		options.add(new BackOption());
-		options.add(new SaveOption(this));
+		options.add(new BackButton());
+		options.add(new SaveButton(this));
 	}
 
 }

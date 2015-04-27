@@ -1,14 +1,11 @@
 package com.ben.javaengine.display;
 
 import java.awt.Color;
-import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
 import com.ben.javaengine.Controller;
@@ -19,11 +16,9 @@ import com.ben.javaengine.game.state.AbstractState;
 
 public class DisplayMain extends JFrame implements WindowListener {
 	private static final long serialVersionUID = 1L;
-	private KeyListener currListener;
 	
 	public DisplayMain() {
 		super();
-		currListener = null;
 		initDisplay();
 		setVisible(true);
 	}
@@ -40,14 +35,6 @@ public class DisplayMain extends JFrame implements WindowListener {
 		setContentPane(contentPane);
 		contentPane.setVisible(false);
 		addWindowListener(this);
-	}
-	
-	public void registerInputMapInputs(KeyStroke keyStroke, String actionMapKey) {
-
-	}
-	
-	public void registerActionMapActions(String key, AbstractAction action) {
-		
 	}
 	
 	public void setState(AbstractState state) {

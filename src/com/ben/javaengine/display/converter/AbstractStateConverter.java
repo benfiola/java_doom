@@ -27,7 +27,7 @@ abstract public class AbstractStateConverter implements KeyListener {
 			converter = new MainMenuStateConverter((MainMenuState) state, contentPane);
 		}
 		if(state instanceof RendererState) {
-			//implement this
+			converter = new RendererStateConverter((RendererState) state, contentPane);
 		}
 		if(state instanceof OptionsMenuState) {
 			converter = new OptionsMenuStateConverter((OptionsMenuState) state, contentPane);

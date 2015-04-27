@@ -8,8 +8,6 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import org.apache.log4j.Logger;
-
 import com.ben.javaengine.Controller;
 import com.ben.javaengine.display.components.NavigableListOptionButton;
 import com.ben.javaengine.display.components.Spacer;
@@ -17,11 +15,11 @@ import com.ben.javaengine.game.event.menu.NextOptionEvent;
 import com.ben.javaengine.game.event.menu.PreviousOptionEvent;
 import com.ben.javaengine.game.event.menu.SelectOptionEvent;
 import com.ben.javaengine.game.state.MainMenuState;
-import com.ben.javaengine.options.AbstractOption;
-import com.ben.javaengine.options.NavigableListOption;
+import com.ben.javaengine.menubuttons.AbstractButton;
+import com.ben.javaengine.menubuttons.NavigableListButton;
 
 public class MainMenuStateConverter extends AbstractMenuStateConverter {
-	private static final Logger LOG = Logger.getLogger(MainMenuStateConverter.class);
+	//private static final Logger LOG = Logger.getLogger(MainMenuStateConverter.class);
 	private static final String TITLE = "Main Menu";
 	private MainMenuState state;
 	
@@ -34,11 +32,11 @@ public class MainMenuStateConverter extends AbstractMenuStateConverter {
 	protected void prepareLayout() {		
 		contentPane.setLayout(new GridBagLayout());
 		createHeader();
-		List<AbstractOption> menuOptions = state.getOptions();
+		List<AbstractButton> menuOptions = state.getOptions();
 		for(int x = 0; x < menuOptions.size(); x++) {
-			AbstractOption currOption = menuOptions.get(x);
-			if(currOption instanceof NavigableListOption) {
-				NavigableListOption currNavOption = (NavigableListOption) currOption;
+			AbstractButton currOption = menuOptions.get(x);
+			if(currOption instanceof NavigableListButton) {
+				NavigableListButton currNavOption = (NavigableListButton) currOption;
 				createRow(currNavOption, x);
 			}
 		}
@@ -46,14 +44,14 @@ public class MainMenuStateConverter extends AbstractMenuStateConverter {
 	}
 	
 	@Override
-	protected Color getOptionBackgroundColor(AbstractOption option) {
+	protected Color getOptionBackgroundColor(AbstractButton option) {
 		if(state.isSelected(option)) {
 			return SELECTED_COLOR;
 		}
 		return MENU_BACKGROUND_COLOR;
 	}
 	
-	private void createRow(NavigableListOption option, int index) {
+	private void createRow(NavigableListButton option, int index) {
 		int gridY = index + TITLE_HEIGHT;
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;

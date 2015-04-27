@@ -7,21 +7,17 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
 
-import com.ben.javaengine.options.ConfigurableOption;
+import com.ben.javaengine.menubuttons.ConfigurableButton;
 
 public class ConfigurableOptionButton extends JPanel {
-	private ConfigurableOption value;
-	private Color textColor;
 	private Color backgroundColor;
 	
 	private static final long serialVersionUID = 1L;
 	
-	public ConfigurableOptionButton(ConfigurableOption value, Color backgroundColor, Color textColor) {
+	public ConfigurableOptionButton(ConfigurableButton value, Color backgroundColor, Color textColor) {
 		super();
 		this.setLayout(new GridBagLayout());
-		this.textColor = textColor;
 		this.backgroundColor = backgroundColor;
-		this.value = value;
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;

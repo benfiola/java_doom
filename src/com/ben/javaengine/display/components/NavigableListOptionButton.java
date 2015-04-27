@@ -7,19 +7,15 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
 
-import com.ben.javaengine.options.NavigableListOption;
+import com.ben.javaengine.menubuttons.NavigableListButton;
 
 public class NavigableListOptionButton extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private NavigableListOption option;
 	private Color backgroundColor;
-	private Color textColor;
 	
-	public NavigableListOptionButton(NavigableListOption option, Color backgroundColor, Color textColor) {
+	public NavigableListOptionButton(NavigableListButton option, Color backgroundColor, Color textColor) {
 		super();
-		this.option = option;
 		this.backgroundColor = backgroundColor;
-		this.textColor = textColor;
 		
 		setLayout(new GridBagLayout());
 		

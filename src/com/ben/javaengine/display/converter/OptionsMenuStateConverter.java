@@ -8,21 +8,19 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import org.apache.log4j.Logger;
-
 import com.ben.javaengine.Controller;
 import com.ben.javaengine.display.components.ConfigurableOptionButton;
 import com.ben.javaengine.display.components.Spacer;
-import com.ben.javaengine.game.event.options.EditOptionEvent;
-import com.ben.javaengine.game.event.options.NextOptionEvent;
-import com.ben.javaengine.game.event.options.PreviousOptionEvent;
-import com.ben.javaengine.game.event.options.SelectOptionEvent;
+import com.ben.javaengine.game.event.menu.NextOptionEvent;
+import com.ben.javaengine.game.event.menu.PreviousOptionEvent;
+import com.ben.javaengine.game.event.menu.SelectOptionEvent;
+import com.ben.javaengine.game.event.menu.options.EditOptionEvent;
 import com.ben.javaengine.game.state.OptionsMenuState;
-import com.ben.javaengine.options.AbstractOption;
-import com.ben.javaengine.options.ConfigurableOption;
+import com.ben.javaengine.menubuttons.AbstractButton;
+import com.ben.javaengine.menubuttons.ConfigurableButton;
 
 public class OptionsMenuStateConverter extends AbstractMenuStateConverter {
-	private static final Logger LOG = Logger.getLogger(OptionsMenuStateConverter.class);
+	//private static final Logger LOG = Logger.getLogger(OptionsMenuStateConverter.class);
 	private static final String TITLE = "Options";
 	private OptionsMenuState state;
 
@@ -35,11 +33,11 @@ public class OptionsMenuStateConverter extends AbstractMenuStateConverter {
 	protected void prepareLayout() {
 		contentPane.setLayout(new GridBagLayout());
 		createHeader();
-		List<AbstractOption> options = state.getOptions();
+		List<AbstractButton> options = state.getOptions();
 		for(int x = 0; x < options.size(); x++) {
-			AbstractOption currOption = options.get(x);
-			if(currOption instanceof ConfigurableOption) {
-				ConfigurableOption currConfOption = (ConfigurableOption) currOption;
+			AbstractButton currOption = options.get(x);
+			if(currOption instanceof ConfigurableButton) {
+				ConfigurableButton currConfOption = (ConfigurableButton) currOption;
 				createRow(currConfOption, x);
 			}
 		}
@@ -47,7 +45,7 @@ public class OptionsMenuStateConverter extends AbstractMenuStateConverter {
 	}
 	
 	@Override
-	protected Color getOptionBackgroundColor(AbstractOption option) {
+	protected Color getOptionBackgroundColor(AbstractButton option) {
 		Color toReturn = MENU_BACKGROUND_COLOR;
 		if(state.isSelected(option)) {
 			toReturn = SELECTED_COLOR;
@@ -58,7 +56,7 @@ public class OptionsMenuStateConverter extends AbstractMenuStateConverter {
 		return toReturn;
 	}
 	
-	private void createRow(ConfigurableOption option, int index) {
+	private void createRow(ConfigurableButton option, int index) {
 		int gridY = index + TITLE_HEIGHT;
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;

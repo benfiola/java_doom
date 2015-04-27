@@ -1,4 +1,4 @@
-package com.ben.javaengine.options;
+package com.ben.javaengine.menubuttons.options;
 
 import org.apache.log4j.Logger;
 
@@ -7,22 +7,25 @@ import com.ben.javaengine.configuration.ConfigurationProperty;
 import com.ben.javaengine.game.state.AbstractState;
 import com.ben.javaengine.game.state.MainMenuState;
 import com.ben.javaengine.game.state.OptionsMenuState;
+import com.ben.javaengine.menubuttons.AbstractButton;
+import com.ben.javaengine.menubuttons.ConfigurableButton;
+import com.ben.javaengine.menubuttons.NavigableFooterButton;
 
-public class SaveOption extends NavigableFooterOption {
-	private static final Logger LOG = Logger.getLogger(SaveOption.class);
+public class SaveButton extends NavigableFooterButton {
+	private static final Logger LOG = Logger.getLogger(SaveButton.class);
 	
 	private OptionsMenuState state;
-	public SaveOption(OptionsMenuState state) {
+	public SaveButton(OptionsMenuState state) {
 		super("Save");
 		this.state = state;
 	}
 
 	@Override
-	public AbstractState nextState() {
+	public AbstractState getNextState() {
 		Configuration config = new Configuration();
-		for(AbstractOption opt : state.getOptions()) {
-			if(opt instanceof ConfigurableOption) {
-				ConfigurableOption configOpt = (ConfigurableOption) opt;
+		for(AbstractButton opt : state.getOptions()) {
+			if(opt instanceof ConfigurableButton) {
+				ConfigurableButton configOpt = (ConfigurableButton) opt;
 				ConfigurationProperty prop = configOpt.getProperty();
 				try {
 					ConfigurationProperty toChange = config.getProperty(prop.getKey());

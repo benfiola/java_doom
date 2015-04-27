@@ -7,20 +7,15 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
 
-import com.ben.javaengine.options.NavigableFooterOption;
-import com.ben.javaengine.options.NavigableListOption;
+import com.ben.javaengine.menubuttons.NavigableFooterButton;
 
 public class NavigableFooterOptionButton extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private NavigableFooterOption option;
 	private Color backgroundColor;
-	private Color textColor;
 	
-	public NavigableFooterOptionButton(NavigableFooterOption option, Color backgroundColor, Color textColor) {
+	public NavigableFooterOptionButton(NavigableFooterButton option, Color backgroundColor, Color textColor) {
 		super();
-		this.option = option;
 		this.backgroundColor = backgroundColor;
-		this.textColor = textColor;
 		
 		setLayout(new GridBagLayout());
 		

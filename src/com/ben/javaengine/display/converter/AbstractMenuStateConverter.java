@@ -7,18 +7,16 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import org.apache.log4j.Logger;
-
 import com.ben.javaengine.display.components.CenteredTextLabel;
 import com.ben.javaengine.display.components.NavigableFooterOptionButton;
 import com.ben.javaengine.display.components.Spacer;
 import com.ben.javaengine.game.state.AbstractMenuState;
-import com.ben.javaengine.options.AbstractOption;
-import com.ben.javaengine.options.NavigableFooterOption;
+import com.ben.javaengine.menubuttons.AbstractButton;
+import com.ben.javaengine.menubuttons.NavigableFooterButton;
 
 abstract public class AbstractMenuStateConverter extends AbstractStateConverter {
-	private static final Logger LOG = Logger
-			.getLogger(MainMenuStateConverter.class);
+	//private static final Logger LOG = Logger
+	//		.getLogger(AbstractMenuStateConverter.class);
 
 	protected static final Integer TITLE_HEIGHT = 2;
 	protected static final Color PANEL_COLOR = Color.GRAY;
@@ -38,7 +36,7 @@ abstract public class AbstractMenuStateConverter extends AbstractStateConverter 
 		this.state = state;
 	}
 
-	abstract protected Color getOptionBackgroundColor(AbstractOption option);
+	abstract protected Color getOptionBackgroundColor(AbstractButton option);
 
 	protected void createHeader() {
 		GridBagConstraints c = new GridBagConstraints();
@@ -73,11 +71,11 @@ abstract public class AbstractMenuStateConverter extends AbstractStateConverter 
 	}
 
 	protected void createFooter() {
-		List<NavigableFooterOption> footerOptions = new ArrayList<NavigableFooterOption>();
+		List<NavigableFooterButton> footerOptions = new ArrayList<NavigableFooterButton>();
 		Integer listItems = 0;
-		for (AbstractOption option : state.getOptions()) {
-			if (option instanceof NavigableFooterOption) {
-				footerOptions.add((NavigableFooterOption) option);
+		for (AbstractButton option : state.getOptions()) {
+			if (option instanceof NavigableFooterButton) {
+				footerOptions.add((NavigableFooterButton) option);
 			} else {
 				listItems++;
 			}
@@ -127,7 +125,7 @@ abstract public class AbstractMenuStateConverter extends AbstractStateConverter 
 			contentPane.add(new Spacer(), c);
 
 			c = new GridBagConstraints();
-			NavigableFooterOption curr = footerOptions.get(0);
+			NavigableFooterButton curr = footerOptions.get(0);
 			c.gridx = 1;
 			c.gridwidth = 1;
 			c.gridheight = 1;
@@ -141,7 +139,7 @@ abstract public class AbstractMenuStateConverter extends AbstractStateConverter 
 		}
 		if (footerOptions.size() == 2) {
 			c = new GridBagConstraints();
-			NavigableFooterOption curr = footerOptions.get(0);
+			NavigableFooterButton curr = footerOptions.get(0);
 			c.gridx = 0;
 			c.gridwidth = 1;
 			c.gridheight = 1;

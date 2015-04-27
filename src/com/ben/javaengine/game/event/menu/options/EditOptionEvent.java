@@ -1,4 +1,4 @@
-package com.ben.javaengine.game.event.options;
+package com.ben.javaengine.game.event.menu.options;
 
 import java.awt.event.KeyEvent;
 

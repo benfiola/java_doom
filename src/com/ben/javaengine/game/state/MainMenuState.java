@@ -5,10 +5,10 @@ import com.ben.javaengine.game.event.AbstractEvent;
 import com.ben.javaengine.game.event.menu.NextOptionEvent;
 import com.ben.javaengine.game.event.menu.PreviousOptionEvent;
 import com.ben.javaengine.game.event.menu.SelectOptionEvent;
-import com.ben.javaengine.mainmenu.Exit;
-import com.ben.javaengine.mainmenu.Options;
-import com.ben.javaengine.mainmenu.Start;
-import com.ben.javaengine.options.NavigableListOption;
+import com.ben.javaengine.menubuttons.NavigableListButton;
+import com.ben.javaengine.menubuttons.mainmenu.ExitButton;
+import com.ben.javaengine.menubuttons.mainmenu.OptionsButton;
+import com.ben.javaengine.menubuttons.mainmenu.StartButton;
 
 public class MainMenuState extends AbstractMenuState {
 	
@@ -17,7 +17,7 @@ public class MainMenuState extends AbstractMenuState {
 	}
 	
 	public void selectOption() {
-		Controller.getInstance().updateState(((NavigableListOption) options.get(selectedIndex)).nextState());
+		Controller.getInstance().updateState(((NavigableListButton) options.get(selectedIndex)).getNextState());
 	}
 	
 	public void takeAction(AbstractEvent e) {
@@ -32,8 +32,8 @@ public class MainMenuState extends AbstractMenuState {
 
 	@Override
 	protected void populateOptions() {
-		options.add(new Start());
-		options.add(new Options());
-		options.add(new Exit());
+		options.add(new StartButton());
+		options.add(new OptionsButton());
+		options.add(new ExitButton());
 	}
 }

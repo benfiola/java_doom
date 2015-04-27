@@ -58,20 +58,22 @@ public class ConfigurationProperty {
 	}
 
 	public void setValue(Object value) {
-		if (value instanceof String) {
-			String strValue = (String) value;
-			if (parserHint == Integer.class) {
-				this.value = Integer.parseInt(strValue);
-			} else if (parserHint == Double.class) {
-				this.value = Double.parseDouble(strValue);
+		if (value != null) {
+			if (value instanceof String) {
+				String strValue = (String) value;
+				if (parserHint == Integer.class) {
+					this.value = Integer.parseInt(strValue);
+				} else if (parserHint == Double.class) {
+					this.value = Double.parseDouble(strValue);
+				}
+			} else if (value instanceof Integer && parserHint == Integer.class) {
+				this.value = value;
+			} else if (value instanceof Double && parserHint == Double.class) {
+				this.value = value;
+			} else {
+				LOG.error("Unable to set value of ConfigurationProperty " + key
+						+ " due to conflicting types.");
 			}
-		} else if (value instanceof Integer && parserHint == Integer.class) {
-			this.value = value;
-		} else if (value instanceof Double && parserHint == Double.class) {
-			this.value = value;
-		} else {
-			LOG.error("Unable to set value of ConfigurationProperty " + key
-					+ " due to conflicting types.");
 		}
 	}
 }

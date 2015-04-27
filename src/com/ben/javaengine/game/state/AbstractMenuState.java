@@ -3,21 +3,20 @@ package com.ben.javaengine.game.state;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ben.javaengine.options.AbstractOption;
-import com.ben.javaengine.options.NavigableFooterOption;
+import com.ben.javaengine.menubuttons.AbstractButton;
 
 abstract public class AbstractMenuState extends AbstractState {
-	protected List<AbstractOption> options;
+	protected List<AbstractButton> options;
 	protected Integer selectedIndex;
 	
 	public AbstractMenuState() {
 		super();
-		options = new ArrayList<AbstractOption>();
+		options = new ArrayList<AbstractButton>();
 		selectedIndex = 0;
 		populateOptions();
 	}
 	
-	public List<AbstractOption> getOptions() {
+	public List<AbstractButton> getOptions() {
 		return options;
 	}
 	
@@ -35,7 +34,7 @@ abstract public class AbstractMenuState extends AbstractState {
 		}
 	}
 	
-	public boolean isSelected(AbstractOption option) {
+	public boolean isSelected(AbstractButton option) {
 		return option.equals(options.get(selectedIndex));
 	}
 	

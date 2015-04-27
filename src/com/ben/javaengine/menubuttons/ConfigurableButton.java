@@ -1,17 +1,17 @@
-package com.ben.javaengine.options;
+package com.ben.javaengine.menubuttons;
 
 import org.apache.log4j.Logger;
 
 import com.ben.javaengine.configuration.ConfigurationProperty;
 
-public class ConfigurableOption extends AbstractOption {
-	private static final Logger LOG = Logger.getLogger(ConfigurableOption.class);
+public class ConfigurableButton extends AbstractButton {
+	private static final Logger LOG = Logger.getLogger(ConfigurableButton.class);
 	private ConfigurationProperty property;
 	private String newValueString;
 	private Object newValue;
 	
 	
-	public ConfigurableOption(ConfigurationProperty property) {
+	public ConfigurableButton(ConfigurationProperty property) {
 		super();
 		this.property = property;
 		this.newValueString = property.getValue().toString();
