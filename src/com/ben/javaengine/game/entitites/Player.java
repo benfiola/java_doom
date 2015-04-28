@@ -4,6 +4,7 @@ import javafx.geometry.Point3D;
 
 public class Player {
 	private Point3D location;
+	private Double direction;
 	private static final Double HEIGHT = 5.0;
 
 	public Player(Point3D location) {
